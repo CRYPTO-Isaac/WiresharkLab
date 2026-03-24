@@ -22,7 +22,7 @@ In this lab I investigated the network traffic captured on a specfic network. Th
 <h2>Report walkthrough</h2>
 
 <p align="center">
-Phase 1: High Level Triage <br/>
+<h3>Phase 1: High Level Triage</h3> <br/>
 <img src="https://github.com/CRYPTO-Isaac/WiresharkLab/blob/main/1774365086013-c0c7ac37-c01d-4706-a6e1-9d4d2c5ef5c1.png?raw=true" height="80%" width="80%" alt="Wireshark Steps" />
 
   The protocol hierachy outlines the types of protools which were mostly used in the timeframe 
@@ -30,8 +30,7 @@ Phase 1: High Level Triage <br/>
   
   IPv4 and TCP where the main protocols used suggesting the majority of traffic sent and received was over a Wi-Fi connection.
   
-Phase 2: Filtering Conversations: What IP addresses talk the most? 
-<br />
+<h3>Phase 2: Filtering Conversations: What IP addresses talk the most? </h3>
 <br />
 
 <img src="https://github.com/CRYPTO-Isaac/WiresharkLab/blob/main/Screenshot%202026-03-24%20at%2016.13.16.png?raw=true" height="80%" width="80%" alt="Wireshark Steps"/>
@@ -48,21 +47,64 @@ However in this instance of a port scan, the only event that takes place is aski
 <br />
 <br />
 
-Phase 3: Attack Vector Diagnosis  <br/>
+<h3>Phase 3: Attack Vector Diagnosis </h3> <br/>
 <img src="https://github.com/CRYPTO-Isaac/WiresharkLab/blob/main/Screenshot%202026-03-24%20at%2016.13.23.png?raw=true" height="80%" width="80%" alt="Wireshark Steps"/>
 <br />
+The external devices are most likely doing a service enumeration which is a common technique used to identify specific software versions, configurations and applications running on the open network ports which helps finding exploitable vulnerabilities. <br /><br />
+ 
+ Further confirmation is given when we use the filter 
+ tcp.flags.syn == 1 && tcp.flags.ack == 0
+ Sequential SYN packets sent from 146.90.197.173 was sent to different ports on 192.168.1.200 therefore the external machine is doing a reconnaissance.
+ 
 <br />
-Wait for process to complete (may take some time):  <br/>
-<img src="https://i.imgur.com/JL945Ga.png" height="80%" width="80%" alt="Wireshark Steps"/>
+<br />
+
+The external machine takes part in banner grabbing as they completed the handshake long enough to confirm the port is open and identify the SSH version running
+ - SSH sends banner after handshake (SSH-1.99-OpenSSH_4.4)
+ There was no attempts of authentication or command execution observed.
+ <br/>
+<img src="https://github.com/CRYPTO-Isaac/WiresharkLab/blob/main/Screenshot%202026-03-24%20at%2016.13.32.png?raw=true" height="80%" width="80%" alt="Wireshark Steps"/>
 <br />
 <br />
-Sanitization complete:  <br/>
-<img src="https://i.imgur.com/K71yaM2.png" height="80%" width="80%" alt="Wireshark Steps"/>
-<br />
-<br />
-Observe the wiped disk:  <br/>
-<img src="https://i.imgur.com/AeZkvFQ.png" height="80%" width="80%" alt="Wireshark Steps"/>
-</p>
+
+<h3>POST requests</h3>
+ We applied the filter http.request.method == “POST” to see the POST requests that were present in the network and we found that: 
+ <br />
+ <br />
+ • Multiple POST requests<br />
+ • From 146.90.197.173 → 192.168.1.200 <br />
+ • Targeting many different PHP endpoints <br />
+ • Lengths between ~300–1200 bytes <br /><br /><br />
+ This does not look like normal browsing and the targets the POST requests were trying to reach suggested patterns of web browser exploitation and attempts and vulnerability scanning
+ The attacker is: <br /><br />
+ • Trying multiple CMS paths <br />
+ • Testing known vulnerable endpoints<br />
+ • Attempting file upload scripts<br />
+ • Probing admin panels<br />
+ • Targeting WordPress paths<br />
+ • Targeting LibreCMS<br />
+ • Targeting Joomla components<br />
+ • Targeting upload scripts<br />
+ • This is classic web exploit kit / automated exploitation scanning.<br />
+
+
+ <h3> Phase 4: Remidiation actions </h3>
+ <br />
+ - Disable unnecessary services <br />
+- Telnet (insecure → remove immediately) <br />
+- FTP (replace with SFTP/FTPS) <br />
+- VNC (restrict or remove if not needed) <br /> <br />
+🔒 Restrict access to required services <br />
+- Use firewall rules: <br />
+- Allow SSH only from trusted IPs <br />
+- Block all external access by default (deny-all rule)  <br /> <br />
+🌐 Network segmentation  <br />
+- Move internal services behind NAT/firewall  <br />
+- Do NOT expose directly to the internet unless required  <br />
+
+
+
+
 
 <!--
  ```diff
