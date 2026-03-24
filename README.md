@@ -49,7 +49,7 @@ However in this instance of a port scan, the only event that takes place is aski
 <br />
 
 Phase 3: Attack Vector Diagnosis  <br/>
-<img src="https://i.imgur.com/cdFHBiU.png" height="80%" width="80%" alt="Wireshark Steps"/>
+<img src="https://github.com/CRYPTO-Isaac/WiresharkLab/blob/main/Screenshot%202026-03-24%20at%2016.13.23.png?raw=true" height="80%" width="80%" alt="Wireshark Steps"/>
 <br />
 <br />
 Wait for process to complete (may take some time):  <br/>
