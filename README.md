@@ -23,20 +23,17 @@ In this lab I investigated the network traffic captured on a specfic network. Th
 
 <p align="center">
 Phase 1: High Level Triage <br/>
-<img src="https://image2url.com/r2/default/images/1774365410509-009a0266-69ec-4d30-9186-3ff31d5358fa.png" height="80%" width="80%" alt="Wireshark Steps" />
+<img src="https://github.com/CRYPTO-Isaac/WiresharkLab/blob/main/1774365086013-c0c7ac37-c01d-4706-a6e1-9d4d2c5ef5c1.png?raw=true" height="80%" width="80%" alt="Wireshark Steps" />
 
   The protocol hierachy outlines the types of protools which were mostly used in the timeframe 
   Wireshark - Protocol Hierachy Statistics was utilised
   
-  IPv4 and TCP where main protocols used suggesting the majority of traffic sent and received was over a Wi-Fi connection.
+  IPv4 and TCP where the main protocols used suggesting the majority of traffic sent and received was over a Wi-Fi connection.
   
+Phase 2: Filtering Conversations: What IP addresses talk the most? 
 <br />
 <br />
-Select the disk:  <br/>
-<img src="https://i.imgur.com/tcTyMUE.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-<br />
-<br />
-Enter the number of passes: <br/>
+
 <img src="https://i.imgur.com/nCIbXbg.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
 <br />
 <br />
