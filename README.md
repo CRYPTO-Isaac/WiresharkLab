@@ -23,7 +23,7 @@ In this lab I investigated the network traffic captured on a specfic network. Th
 
 <p align="center">
 Phase 1: High Level Triage <br/>
-<img src="https://i.imgur.com/62TgaWL.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+<img src="https://image2url.com/r2/default/images/1774365410509-009a0266-69ec-4d30-9186-3ff31d5358fa.png" height="80%" width="80%" alt="Wireshark Steps" />
 
   The protocol hierachy outlines the types of protools which were mostly used in the timeframe 
   Wireshark - Protocol Hierachy Statistics was utilised
